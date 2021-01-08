@@ -1,5 +1,7 @@
 package com.space.model;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,7 +9,7 @@ import java.util.Date;
 @Table(name = "ship")
 public class Ship {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String planet;

@@ -83,6 +83,20 @@ public class ShipController {
         return new ResponseEntity<>(ship, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/ships", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Ship> createShip(@RequestBody Ship ship){
+        if (!shipService.isShipValid(ship)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        ship.setSpeed(ship.getSpeed());
+        if (ship.getUsed() == null) ship.setUsed(false);
+        final double rating = shipService.calcRating(ship.getSpeed(), ship.getUsed(), ship.getProdDate());
+        ship.setRating(rating);
+        final Ship savedShip = shipService.createShip(ship);
+        return new ResponseEntity<>(savedShip, HttpStatus.OK);
+    }
+
     private Long convertIdToLong(String string){
         if (string == null){
             return null;

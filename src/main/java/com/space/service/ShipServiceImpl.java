@@ -138,17 +138,18 @@ public class ShipServiceImpl implements ShipService{
     public boolean isSpeedValid(Double speed){
         final double minSpeed = 0.01;
         final double maxSpeed = 0.99;
-        return speed != null && round(speed) >= minSpeed && round(speed) <= maxSpeed;
+        return speed != null && speed.compareTo(minSpeed) >= 0 && speed.compareTo(maxSpeed) <= 0;
     }
 
     public boolean isCrewSizeValid(Integer crewSize){
         final int minCrewSize = 1;
         final int maxCrewSize = 9999;
-        return crewSize != null && crewSize >= minCrewSize && crewSize <= maxCrewSize;
+        return crewSize != null && crewSize.compareTo(minCrewSize) >= 0
+                                && crewSize.compareTo(maxCrewSize) <= 0;
     }
 
     public boolean isProdDateValid(Date date){
-        final Date minProdDate = getDateFormYear(2018);
+        final Date minProdDate = getDateFormYear(2800);
         final Date maxProdDate = getDateFormYear(3019);
         return date != null && date.after(minProdDate) && date.before(maxProdDate);
     }
@@ -161,7 +162,7 @@ public class ShipServiceImpl implements ShipService{
 
     public Date getDateFormYear(int year){
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, year);
+        calendar.set(Calendar.YEAR, year);
         return calendar.getTime();
     }
 

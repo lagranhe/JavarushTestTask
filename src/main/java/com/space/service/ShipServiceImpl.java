@@ -71,12 +71,12 @@ public class ShipServiceImpl implements ShipService{
             if (shipType != null && !ship.getShipType().equals(shipType)) return;
             if (afterDate != null && !ship.getProdDate().after(afterDate)) return;
             if (beforeDate != null && !ship.getProdDate().before(beforeDate)) return;
-            if (isUsed != null && !ship.getUsed().equals(isUsed)) return;
+            if (isUsed != null && ship.getUsed().booleanValue() != isUsed.booleanValue()) return;
             if (minSpeed != null && ship.getSpeed().compareTo(minSpeed) < 0) return;
             if (maxSpeed != null && ship.getSpeed().compareTo(maxSpeed) > 0) return;
             if (minCrewSize != null && ship.getCrewSize().compareTo(minCrewSize) < 0) return;
             if (maxCrewSize != null && ship.getCrewSize().compareTo(maxCrewSize) > 0) return;
-            if (minRating != null && ship.getRating().compareTo(minRating) > 0) return;
+            if (minRating != null && ship.getRating().compareTo(minRating) < 0) return;
             if (maxRating != null && ship.getRating().compareTo(maxRating) > 0) return;
             ships.add(ship);
         });

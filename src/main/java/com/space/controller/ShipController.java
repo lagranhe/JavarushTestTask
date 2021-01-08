@@ -73,7 +73,7 @@ public class ShipController {
     public ResponseEntity<Ship> getShip (@PathVariable(value = "id") String stringId){
         final Long id = convertIdToLong(stringId);
 
-        if (id <= 0 || id == null) {
+        if (id == null || id <= 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         final Ship ship = shipService.getShip(id);

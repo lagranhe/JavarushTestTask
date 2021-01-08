@@ -24,7 +24,7 @@ public interface ShipService {
     );
 
     Ship createShip(Ship ship);
-    Ship updateShip(Ship oldShip, Ship newShip);
+    Ship updateShip(Ship oldShip, Ship newShip) throws IllegalArgumentException;
     void deleteShip(Ship ship);
     Ship getShip(Long id);
     List<Ship> sortShip(List<Ship> shipList, ShipOrder order);

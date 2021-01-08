@@ -34,7 +34,63 @@ public class ShipServiceImpl implements ShipService{
 
     @Override
     public Ship updateShip(Ship oldShip, Ship newShip) {
-        return null;
+        boolean isRecalculationRanking = false;
+        if (newShip.getName() != null){
+            if (isStringValid(newShip.getName())){
+                oldShip.setName(newShip.getName());
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if (newShip.getPlanet() != null){
+            if (isStringValid(newShip.getPlanet())){
+                oldShip.setPlanet(newShip.getPlanet());
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if (newShip.getShipType() != null){
+            oldShip.setShipType(newShip.getShipType());
+        }
+
+        if (newShip.getProdDate() != null){
+            if (isProdDateValid(newShip.getProdDate())){
+                oldShip.setProdDate(newShip.getProdDate());
+                isRecalculationRanking = true;
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if (newShip.getUsed() != null){
+            oldShip.setUsed(newShip.getUsed());
+        }
+
+        if (newShip.getSpeed() != null){
+            if (isSpeedValid(newShip.getSpeed())){
+                oldShip.setSpeed(newShip.getSpeed());
+                isRecalculationRanking = true;
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if (newShip.getCrewSize() != null){
+            if (isCrewSizeValid(newShip.getCrewSize())){
+                oldShip.setCrewSize(newShip.getCrewSize());
+                isRecalculationRanking = true;
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if (isRecalculationRanking){
+            oldShip.setRating(calcRating(oldShip.getSpeed(), oldShip.getUsed(), oldShip.getProdDate()));
+        }
+        shipRepository.save(oldShip);
+        return oldShip;
     }
 
     @Override

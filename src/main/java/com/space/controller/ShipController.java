@@ -97,6 +97,41 @@ public class ShipController {
         return new ResponseEntity<>(savedShip, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/ships/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Ship> updateShip(@PathVariable(value = "id") String stringId,
+                                           @RequestBody  Ship newShip){
+        final Long id = convertIdToLong(stringId);
+        if (id == null || id <= 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        final Ship shipForChange = shipService.getShip(id);
+        if (shipForChange == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        try {
+            final Ship updatedShip = shipService.updateShip(shipForChange, newShip);
+            return new ResponseEntity<>(updatedShip, HttpStatus.OK);
+        } catch (IllegalArgumentException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/ships/{id}" , method = RequestMethod.DELETE)
+    public ResponseEntity<Ship> deleteShip (@PathVariable(value = "id") String stringId){
+        final Long id = convertIdToLong(stringId);
+
+        if (id == null || id <= 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        final Ship ship = shipService.getShip(id);
+        if (ship == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        shipService.deleteShip(ship);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     private Long convertIdToLong(String string){
         if (string == null){
             return null;

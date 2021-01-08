@@ -4,6 +4,7 @@ import com.space.controller.ShipOrder;
 import com.space.model.Ship;
 import com.space.model.ShipType;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ShipService {
@@ -19,18 +20,15 @@ public interface ShipService {
                         Integer minCrewSize,
                         Integer maxCrewSize,
                         Double minRating,
-                        Double maxRating,
-                        ShipOrder order,
-                        Integer pageNumber,
-                        Integer pageSize
+                        Double maxRating
     );
 
     Ship createShip(Ship ship);
     Ship updateShip(Ship oldShip, Ship newShip);
-    void deleteShip(Long id);
+    void deleteShip(Ship ship);
     Ship getShip(Long id);
     List<Ship> sortShip(List<Ship> shipList, ShipOrder order);
     List<Ship> getShipFromPage(List<Ship> shipList, Integer pageNumber, Integer pageSize);
     boolean isShipValid(Ship ship);
-    Double calcRating(Ship ship);
+    double calcRating(double speed, boolean isUsed, Date dateProduct);
 }

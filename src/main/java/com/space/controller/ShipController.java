@@ -16,5 +16,5 @@ public class ShipController {
     public ShipController(ShipRepository shipRepository) {
         this.shipRepository = shipRepository;
     }
-    
+
 }
